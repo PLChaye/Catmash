@@ -1,16 +1,34 @@
+h1{
+	text-align: center;
+}
+
 table{
 	border-collapse: collapse;
+	width:100%;
 }
 
-td, th{
-	border: 1px solid black;
+#cat1_image,#cat2_image{
+	width:30%;
+	height:200px;
+	text-align: center;
 }
 
-td{
-	width:400px;
-	height:400px;
+.table_border{
+	width:5%;
 }
 
 img{
-	width:400px;
+	height:300px;
+	overflow: hidden;
+}
+
+#versus{
+	text-align: center;
+	font-size: 50pt;
+	width: 20%;
+}
+
+#cat1_score, #cat2_score{
+	font-size: 30pt;
+	text-align: center;
 }
