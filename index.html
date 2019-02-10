@@ -1,13 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 	<head>
 		<meta charset="utf-8">
-		<title>Hello World</title>
+		<title>Catmash</title>
 		<link rel="stylesheet" type="text/css" href="style.css"/>
 	</head>
 	
 	<body>
-		<h1>Catmash</h1>
+		<nav>
+			<table>
+				<tr>
+					<td></td>
+					<td><h1>Catmash</h1></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td id="vote_link">Vote</td>
+					<td></td>
+					<td id="score_link">Scores</td>
+				</tr>
+			</table>
+		</nav>
 
 		<table id="cats_container">
 			<tr>
@@ -28,6 +41,10 @@
 				<td id="cat2_score" class="score"></td>
 				<td class="table_border"></td>
 			</tr>
+		</table>
+
+		<table id="global_scores">
+			
 		</table>
 
 		<script src="catmashScript.js"></script>

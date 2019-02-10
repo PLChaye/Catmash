@@ -63,6 +63,7 @@ var catmash = {
 		}
 	},
 
+
 	//All the mathematical operations
 	doTheMath: {
 
@@ -126,14 +127,12 @@ var catmash = {
 		},
 
 		//Return a fixed number of decimals
-		getRoundedFloat(number, numberOfDecimals){
+		getRoundedFloat : function(number, numberOfDecimals){
 			if(numberOfDecimals == undefined){
 				numberOfDecimals = 1;
 			}
 			return Math.round(number * Math.pow(10, numberOfDecimals)) / Math.pow(10, numberOfDecimals);
 		}
-
-
 	},
 
 
@@ -214,6 +213,62 @@ var catmash = {
 					scoreCells[i].innerHTML = '';
 				}
 			}, 1000);
+		},
+
+		//Display the score of every single cat in the database
+		globalScores(){
+
+			//Define elements of each row of the table 
+			var row, imageCell, image, statsCell, statsParagraph, rankEm, statsTextNode, rankTextNode,
+
+			//Hide the vote tab and show the score page
+				voteTab = document.getElementById('cats_container'),
+				scoreTab = document.getElementById('global_scores');
+				
+			voteTab.style.display = 'none';
+			scoreTab.style.display = 'block';
+
+			//Empty the table to refresh it
+			scoreTab.innerHTML = '';
+
+			//For each cat
+			for(i = 0, numberOfCats = catmash.catsDatabase.length; i < numberOfCats; i++){
+
+				//Create a row with two cells and an image
+				row = document.createElement('tr');
+				imageCell = document.createElement('td');
+				statsCell = document.createElement('td');
+				statsParagraph = document.createElement('p');
+				rankEm = document.createElement('em');
+				image = document.createElement('img');
+
+				//Creating and adding the description of the cat
+				rankText = '#' + (i+1);
+				statsText = 'Score : ' + catmash.doTheMath.getRoundedFloat(catmash.catsDatabase[i].score) + ' points\n' +
+							'Matchs joués : ' + catmash.catsDatabase[i].matches;
+
+				rankTextNode = document.createTextNode(rankText);
+				statsTextNode = document.createTextNode(statsText);
+				rankEm.appendChild(rankTextNode);
+				statsParagraph.appendChild(statsTextNode);
+				statsCell.appendChild(rankEm);
+				statsCell.appendChild(statsParagraph);
+
+				//Adding the image to the cell
+				image.src = catmash.catsDatabase[i].photo;
+				image.alt = catmash.catsDatabase[i].id;
+				imageCell.appendChild(image);
+
+				//Adding a class to each cell
+				imageCell.className = 'score_image_cell';
+				statsCell.className = 'score_stats_cell';
+
+				//Creating and adding the row to the table
+				row.appendChild(statsCell);
+				row.appendChild(imageCell);
+				scoreTab.appendChild(row);
+			}
+
 		}
 	},
 
@@ -233,7 +288,7 @@ var catmash = {
 				//Change the cursor when the user hover over a cat
 				element.addEventListener('mouseover', function(e){
 					element.style.cursor = 'pointer';
-				})
+				});
 
 				//When the user click on a cat
 				element.addEventListener('click', function(e){
@@ -254,6 +309,52 @@ var catmash = {
 					}, 1000);
 				});
 			});
+		},
+
+		//Show the score table instead of the vote tab
+		showScores : function(){
+
+			//Select the link to the score table
+			var scoreLink = document.getElementById('score_link');
+
+			scoreLink.addEventListener('mouseover', function(e){
+				scoreLink.style.cursor = 'pointer';
+				scoreLink.style.borderBottom = '3px solid black';
+			});
+
+			scoreLink.addEventListener('mouseout', function(e){
+				scoreLink.style.borderBottom = '3px solid transparent';
+			});
+
+			scoreLink.addEventListener('click', function(e){
+				catmash.database.sortTable(catmash.catsDatabase);
+				catmash.display.globalScores();
+			});
+		},
+
+		//Show the vote tab instead of the score table
+		showVotes : function(){
+
+			//Select the link to the vote tab
+			var scoreLink = document.getElementById('vote_link');
+
+			scoreLink.addEventListener('mouseover', function(e){
+				scoreLink.style.cursor = 'pointer';
+				scoreLink.style.borderBottom = '3px solid black';
+			});
+
+			scoreLink.addEventListener('mouseout', function(e){
+				scoreLink.style.borderBottom = '3px solid transparent';
+			});
+
+			//Hide the score table and show the score page
+			scoreLink.addEventListener('click', function(e){
+				var voteTab = document.getElementById('cats_container'),
+					scoreTab = document.getElementById('global_scores');
+
+				scoreTab.style.display = 'none';
+				voteTab.style.display = 'block';
+			});
 		}
 	},
 
@@ -270,13 +371,32 @@ var catmash = {
 					return i;
 				}
 			}
+		},
+
+		//Sort the cat database by score (source : https://openclassrooms.com/fr/courses/1916641-dynamisez-vos-sites-web-avec-javascript/1920696-les-tableaux#/id/r-1926735)
+		sortTable: function(table){
+			table.sort(function(a, b){
+				if(a.score > b.score){
+					return -1;
+				}
+				else if(a.score < b.score){
+					return 1;
+				}
+				else{
+					return 0;
+				}
+			});
 		}
 	}
 };
 
+
 //Fetch and store the content of the JSON file
 catmash.fromJSON.getCats('cats.json');
 
+//Adding events to navigate between the scores and the votes
+catmash.eventHandler.showScores();
+catmash.eventHandler.showVotes();
 
 //Displaying two random cats
 setTimeout(function(){	
