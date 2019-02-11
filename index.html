@@ -3,50 +3,56 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Catmash</title>
+		<link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet"/>
 		<link rel="stylesheet" type="text/css" href="style.css"/>
 	</head>
 	
 	<body>
-		<nav>
-			<table>
-				<tr>
-					<td></td>
-					<td><h1>Catmash</h1></td>
-					<td></td>
-				</tr>
-				<tr>
-					<td id="vote_link">Vote</td>
-					<td></td>
-					<td id="score_link">Scores</td>
-				</tr>
-			</table>
-		</nav>
+		<div class="container">
 
-		<table id="cats_container">
-			<tr>
-				<td class="table_border"></td>
-				<td id="cat1_image">
-					
-				</td>
-				<td id="versus">VS</td>
-				<td id="cat2_image">
-					
-				</td>
-				<td class="table_border"></td>
-			</tr>
-			<tr>
-				<td class="table_border"></td>
-				<td id="cat1_score" class="score"></td>
-				<td></td>
-				<td id="cat2_score" class="score"></td>
-				<td class="table_border"></td>
-			</tr>
-		</table>
+			<!--Header of the page with the links of the 2 tabs--> 
+	      	<div class="row">
+	       		<header class="col-lg-12">
+	       			<h1>Catmash</h1>
+	         		<div class="row">
+	        			<div class="col-md-2 col-sm-3 col-xs-4 col-md-offset-3 col-sm-offset-2 col-xs-offset-1 tabsLinksDiv">
+	            			<a href="#" id="vote_link">Vote</a>
+	            		</div>
+	            		<div class="col-md-2 col-sm-3 col-xs-4 col-md-offset-2 col-sm-offset-2 col-xs-offset-2 tabsLinksDiv">
+	              			<a href="#" id="score_link">Scores</a>
+	            		</div>
+	         		 </div>
+	       		</header>
+	      	</div>
 
-		<table id="global_scores">
-			
-		</table>
+	      	<!--Tab containing the cats you can vote for-->
+	      	<div id="cats_container">
+	      		<div class="row">
+	      			<div class="col-md-4 col-sm-5 col-xs-5 col-md-offset-1 catImage" id="cat1_image"></div>
+			    	<div class="col-md-2 col-sm-2 col-xs-2 lead catImage">VS</div>
+			    	<div class="col-md-4 col-sm-5 col-xs-5 catImage" id="cat2_image"></div>
+	      		</div>
+		    	<div class="row">
+			    	<div class="col-md-4 col-sm-5 col-xs-5 col-md-offset-1">
+			    		<span class="lead score" id="cat1_score"></span>
+			    	</div>
+			    	<div class="col-md-4 col-sm-5 col-xs-5 col-md-offset-2 col-sm-offset-2 col-xs-offset-2">
+			    		<span class="lead score" id="cat2_score"></span>
+			    	</div>
+			    </div>
+		    </div>
+		    
+		    <!--Tab containing the score table-->
+		    <div class="row">
+		    	<div class="col-lg-4 col-md-6 col-sm-6 col-xs-8 col-lg-offset-4 col-md-offset-3 col-sm-offset-3 col-xs-offset-2" id="scores_div">
+			    	<table id="global_scores">
+				
+					</table>
+				</div>
+		    </div>
+	    </div>
 
+		<!--<script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>-->
 		<script src="catmashScript.js"></script>
 	</body>
 </html>

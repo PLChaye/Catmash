@@ -151,17 +151,23 @@ var catmash = {
 				secondImage = document.createElement('img');
 
 				//Generate random numbers to display random cats
-				randomIndexes = catmash.doTheMath.getTwoRandomInt(catmash.catsDatabase.length); 
+				randomIndexes = catmash.doTheMath.getTwoRandomInt(catmash.catsDatabase.length),
 
 			//Adding the properties of the chosen images
+				bootstrapImageClasses = 'img-rounded';
+
 			firstImage.src = catmash.catsDatabase[randomIndexes[0]].photo;
 			firstImage.alt = catmash.catsDatabase[randomIndexes[0]].id;
+			firstImage.className = bootstrapImageClasses;
 			secondImage.src = catmash.catsDatabase[randomIndexes[1]].photo;
 			secondImage.alt = catmash.catsDatabase[randomIndexes[1]].id;
+			secondImage.className = bootstrapImageClasses;
 
-			//Adding the images into the pages 
-			firstImageCell.replaceChild(firstImage, firstImageCell.firstChild);
-			secondImageCell.replaceChild(secondImage, secondImageCell.firstChild);
+			//Adding the images into the pages
+			firstImageCell.innerHTML = '';
+			secondImageCell.innerHTML= '';
+			firstImageCell.appendChild(firstImage, firstImageCell.firstChild);
+			secondImageCell.appendChild(secondImage, secondImageCell.firstChild);
 
 			//Adding some events when the user click on a cat (update scores)
 			catmash.eventHandler.voteForThisCat();
@@ -219,7 +225,7 @@ var catmash = {
 		globalScores(){
 
 			//Define elements of each row of the table 
-			var row, imageCell, image, statsCell, statsParagraph, rankEm, statsTextNode, rankTextNode,
+			var row, imageCell, image, statsCell, statsParagraph, rankSpan, statsTextNode, rankTextNode,
 
 			//Hide the vote tab and show the score page
 				voteTab = document.getElementById('cats_container'),
@@ -239,8 +245,12 @@ var catmash = {
 				imageCell = document.createElement('td');
 				statsCell = document.createElement('td');
 				statsParagraph = document.createElement('p');
-				rankEm = document.createElement('em');
+				rankSpan = document.createElement('span');
 				image = document.createElement('img');
+
+				//Adding a bootstrap class to the text
+				statsParagraph.className = "lead";
+				rankSpan.className = "lead";
 
 				//Creating and adding the description of the cat
 				rankText = '#' + (i+1);
@@ -249,9 +259,9 @@ var catmash = {
 
 				rankTextNode = document.createTextNode(rankText);
 				statsTextNode = document.createTextNode(statsText);
-				rankEm.appendChild(rankTextNode);
+				rankSpan.appendChild(rankTextNode);
 				statsParagraph.appendChild(statsTextNode);
-				statsCell.appendChild(rankEm);
+				statsCell.appendChild(rankSpan);
 				statsCell.appendChild(statsParagraph);
 
 				//Adding the image to the cell
@@ -318,15 +328,17 @@ var catmash = {
 			var scoreLink = document.getElementById('score_link');
 
 			scoreLink.addEventListener('mouseover', function(e){
-				scoreLink.style.cursor = 'pointer';
-				scoreLink.style.borderBottom = '3px solid black';
+				scoreLink.parentNode.style.cursor = 'pointer';
+				scoreLink.parentNode.style.borderBottom = '3px solid #bca858';
 			});
 
 			scoreLink.addEventListener('mouseout', function(e){
-				scoreLink.style.borderBottom = '3px solid transparent';
+				scoreLink.parentNode.style.borderBottom = '3px solid transparent';
 			});
 
 			scoreLink.addEventListener('click', function(e){
+				e.preventDefault();
+
 				catmash.database.sortTable(catmash.catsDatabase);
 				catmash.display.globalScores();
 			});
@@ -340,17 +352,19 @@ var catmash = {
 
 			scoreLink.addEventListener('mouseover', function(e){
 				scoreLink.style.cursor = 'pointer';
-				scoreLink.style.borderBottom = '3px solid black';
+				scoreLink.parentNode.style.borderBottom = '3px solid #bca858';
 			});
 
 			scoreLink.addEventListener('mouseout', function(e){
-				scoreLink.style.borderBottom = '3px solid transparent';
+				scoreLink.parentNode.style.borderBottom = '3px solid transparent';
 			});
 
 			//Hide the score table and show the score page
 			scoreLink.addEventListener('click', function(e){
 				var voteTab = document.getElementById('cats_container'),
 					scoreTab = document.getElementById('global_scores');
+
+				e.preventDefault();
 
 				scoreTab.style.display = 'none';
 				voteTab.style.display = 'block';
